@@ -10,7 +10,7 @@ import 'Three.dart';
 
 void main() =>runApp(new MyApp());
 
-
+//侧滑
 class HomeBuilder {
   static Widget homeDrawer() {
     return new ListView(padding: const EdgeInsets.only(), children: <Widget>[
@@ -69,6 +69,8 @@ class HomeBuilder {
   }
 }
 
+
+//程序入口
 class MyApp extends StatelessWidget{
 
   @override
@@ -86,7 +88,7 @@ class MyApp extends StatelessWidget{
   }
 }
 
-
+//导航_TAB
 class Home extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
@@ -129,9 +131,6 @@ class Home extends StatelessWidget{
             new One(),
             new Two(),
             new TapBoxA(),
-//            Icon(Icons.local_florist, size: 128.0, color: Colors.black12,),
-//            Icon(Icons.change_history, size: 128.0, color: Colors.black12,),
-//            Icon(Icons.directions_bike, size: 128.0, color: Colors.black12,),
           ],
         ),
       ),

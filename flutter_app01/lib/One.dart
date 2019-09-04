@@ -4,6 +4,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app01/TapboxA.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class One extends StatefulWidget{
 
@@ -14,6 +15,7 @@ class One extends StatefulWidget{
   }
 }
 
+//创建并布局
 class OnePageState extends State<One>{
 
   @override
@@ -27,73 +29,24 @@ class OnePageState extends State<One>{
     //分割线
     var divideTiles = ListTile.divideTiles(tiles: _list,context: context).toList();
 
-
     return new Container(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: Column (
-        children: <Widget>[
-//          new Text('123'),
-          new ListView.builder(
-              padding: new EdgeInsets.all(5.0),
-              itemExtent: 50.0,
-              itemBuilder: (context, item){
-                return buildListData(context, titleItems[item], iconItems[item], subTitleItems[item]);
+        child: new Column(
+          children: <Widget>[
+            secondSwiperView(),
+            new Flexible(child: new ListView.separated(
+            itemBuilder: (context, item){
+              return buildListData(context, titleItems[item], iconItems[item], subTitleItems[item]);
               },
-              itemCount: iconItems.length,
-          ),
-        ],
-      ),
-
-    );
-
-
-
-
-    return new Center(
-      child: new Column(
-        children: <Widget>[
-          new Container(
-
-          ),
-          new Text('234264'),
-          new Scrollbar(
-            child: new ListView.separated(
-                itemBuilder: (context, item){
-                  return buildListData(context, titleItems[item], iconItems[item], subTitleItems[item]);
-                },
-                separatorBuilder: (BuildContext context, int index) => new Divider(),
+               separatorBuilder: (BuildContext context, int index) => new Divider(),
                 itemCount: iconItems.length),
-          ),
-        ],
-      ),
+            ),
+          ],
+        )
     );
-
-//    return new Column(
-//      children: <Widget>[
-//         new Text('234264'),
-//         new Scrollbar(
-//             child: new ListView.separated(
-//                  itemBuilder: (context, item){
-//                  return buildListData(context, titleItems[item], iconItems[item], subTitleItems[item]);
-//                  },
-//                separatorBuilder: (BuildContext context, int index) => new Divider(),
-//                  itemCount: iconItems.length),
-//          ),
-//      ],
-//    );
-
-//    return new Scrollbar(
-//      child: new ListView.separated(
-//          itemBuilder: (context, item){
-//            return buildListData(context, titleItems[item], iconItems[item], subTitleItems[item]);
-//      },
-//          separatorBuilder: (BuildContext context, int index) => new Divider(),
-//          itemCount: iconItems.length),
-//    );
 
   }
 
-
+//cell且 点击事件
   Widget buildListData(BuildContext context,String titleItem, Icon iconItem, String subTitleItem){
     return new ListTile(
       leading: iconItem,
@@ -118,6 +71,45 @@ class OnePageState extends State<One>{
     );
   }
 
+//轮播图
+  Widget secondSwiperView(){
+    return Container(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+      color: Colors.deepOrange,
+      width: MediaQuery.of(context).size.width,
+      height: 200,
+      child: Swiper(
+        itemBuilder: (BuildContext context, int index){
+          return Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(secondLists[index]),
+                fit: BoxFit.fill,
+              ),
+//              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+          );
+        },
+
+        pagination: SwiperPagination(
+            alignment: Alignment.bottomRight,
+            margin: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+            builder: DotSwiperPaginationBuilder(
+                color: Colors.black54,
+                activeColor: Colors.red,
+            )
+        ),
+        onTap: (index) => print('scrollerView_Index点击了第$index'),
+        itemCount: secondLists.length,
+        controller: SwiperController(),
+        scrollDirection: Axis.horizontal,
+        autoplay: true,
+      ),
+    );
+  }
+
+
+//数据源
   List<String>titleItems = <String>[
     '键盘', '打印机',
     '路由器', '页码器',
@@ -126,6 +118,12 @@ class OnePageState extends State<One>{
     'wifi加锁', '卡片',
     '沙发', '网页',
     '专用通道', '雪花',
+  ];
+
+  List<String>secondLists = <String>[
+    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3485348007,2192172119&fm=26&gp=0.jpg',
+    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2594792439,969125047&fm=26&gp=0.jpg',
+    'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=190488632,3936347730&fm=26&gp=0.jpg',
   ];
 
   List<Icon> iconItems = <Icon>[
